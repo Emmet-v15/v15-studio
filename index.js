@@ -2,7 +2,6 @@ const https = require("https");
 const fs = require("fs");
 const express = require("express");
 const app = express();
-const routes = require("./routes/method");
 const path = require("path");
 const port = 443;
 
