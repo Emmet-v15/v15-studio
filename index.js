@@ -1,5 +1,6 @@
 const https = require("https");
 const fs = require("fs");
+const subdomain = require("express-subdomain");
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -12,10 +13,11 @@ const options = {
 };
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(subdomain("api", router));
 
 https.createServer(options, app).listen(port, (err) => {
     if (err) console.error(err);
     console.log(`Server started on port ${port}`);
 });
 
-require("./fetchData");
+require("./tasks/fetchData");
