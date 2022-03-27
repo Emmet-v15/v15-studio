@@ -17,3 +17,5 @@ https.createServer(options, app).listen(port, (err) => {
     if (err) console.error(err);
     console.log(`Server started on port ${port}`);
 });
+
+require("./fetchData");

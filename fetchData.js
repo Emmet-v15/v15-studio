@@ -4,7 +4,7 @@ const path = require("path");
 const { username, password, timetableURL } = require("./config.json");
 var data = {};
 
-module.exports = async function fetchData() {
+async function fetchData() {
     let browser = await puppeteer.launch({
         devtools: false,
         userDataDir: "./cache",
@@ -40,6 +40,6 @@ module.exports = async function fetchData() {
     fs.writeFileSync(path.join(__dirname, "public/timetable/data.json"), JSON.stringify({ data: data }, null, 4));
     console.log(`Fetched Data at ${new Date().getHours()}:${new Date().getMinutes()}`);
     setTimeout(fetchData, 60 * 60 * 1000);
-};
+}
 
 fetchData();
