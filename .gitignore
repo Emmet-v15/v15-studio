@@ -117,7 +117,8 @@ sslcert/
 sslcert.zip
 
 # Timetable Cache
-./public/timetable/data.json
+public/timetable/data.json
 
 # Data stored for the timetable
-./config.json
+config.json
+
