@@ -2,9 +2,8 @@ const { Router } = require("express");
 const router = Router();
 
 router.get("*", function (req, res, next) {
-    console.log("stuff");
-    if (!req.url.startsWith("/api/v1")) req.url = "/api/v1" + req.url;
-    next();
+    console.log(req.ip);
+    if (!req.url.startsWith("/api/v1")) res.redirect("/api/v1" + req.url);
 });
 
 router.get("/api/v1", function (req, res) {
