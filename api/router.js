@@ -4,7 +4,7 @@ const router = Router();
 router.get("*", function (req, res, next) {
     console.log(req.ip);
     if (!req.url.startsWith("/api/v1")) res.redirect("/api/v1" + req.url);
-    res.send(200);
+    // res.send(200);
     next();
 });
 
