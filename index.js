@@ -13,7 +13,7 @@ const options = {
 };
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(subdomain("api", router));
+app.use(subdomain("api", require("./api/router")));
 
 https.createServer(options, app).listen(port, (err) => {
     if (err) console.error(err);
