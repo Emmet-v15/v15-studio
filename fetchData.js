@@ -37,7 +37,7 @@ async function fetchData() {
         timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0),
     };
-    fs.writeFileSync(path.join(__dirname, "data.json"), JSON.stringify({ data: data }, null, 4));
+    fs.writeFileSync(path.join(__dirname, "public/timetable/data.json"), JSON.stringify({ data: data }, null, 4));
     console.log(`Fetched Data at ${new Date().getHours()}:${new Date().getMinutes()}`);
     setTimeout(fetchData, 60 * 60 * 1000);
 }

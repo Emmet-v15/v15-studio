@@ -1,9 +1,6 @@
-const table = document.getElementsByClassName("Timetable")[0]; //.getElementsByTagName("tbody")[0];
-const timestamp = document.getElementById("timestamp");
-
 window.onload = async () => {
-    console.log("loaded");
-
+    const table = document.getElementsByClassName("Timetable")[0].getElementsByTagName("tbody")[0];
+    const timestamp = document.getElementById("timestamp");
     const response = await fetch("data.json");
     const { data } = await response.json();
 
@@ -74,7 +71,7 @@ window.onload = async () => {
         let row = table.insertRow(-1);
         row.insertCell(0).innerHTML = lesson.startTime + "-" + lesson.endTime;
         row.insertCell(1).innerHTML = lesson.course.replace(" Linear", "");
-        row.insertCell(2).innerHTML = room;
+        row.insertCell(2).innerHTML = lesson.room;
     });
 
     const refreshTimestamp = () => {

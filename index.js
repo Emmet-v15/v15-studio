@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const routes = require("./routes/method");
 const path = require("path");
+const port = 443;
 
 const options = {
     key: fs.readFileSync("sslcert/v15.studio.key"),
@@ -11,11 +12,9 @@ const options = {
     ca: fs.readFileSync("sslcert/origin-ca.pem"),
 };
 
-app.set("view engine", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", routes);
-
-module.exports = https.createServer(options, app);
+https.createServer(options, app).listen(port, (err) => {
+    if (err) console.error(err);
+    console.log(`Server started on port ${port}`);
+});
