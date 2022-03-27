@@ -122,3 +122,5 @@ public/timetable/data.json
 # Data stored for the timetable
 config.json
 
+# Platform specific data
+package-lock.json
