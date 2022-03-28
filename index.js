@@ -15,9 +15,14 @@ const options = {
 app.use(express.static(path.join(__dirname, "public")));
 app.use(subdomain("api", require("./api/router")));
 
-https.createServer(options, app).listen(port, (err) => {
-    if (err) console.error(err);
-    console.log(`Server started on port ${port}`);
-});
+https
+    .createServer(options, (req, res) => {
+        console.log(req.url);
+        app.handle(req, res);
+    })
+    .listen(port, (err) => {
+        if (err) console.error(err);
+        console.log(`Server started on port ${port}`);
+    });
 
 require("./tasks/fetchData");
