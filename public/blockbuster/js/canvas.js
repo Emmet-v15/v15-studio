@@ -14,7 +14,7 @@ class BlockBuster extends Rendering {
         let y = starty;
         for (let i = 1; i <= 4; i++) {
             for (let j = 1; j <= 4; j++) {
-                hexes.add(new Hex(x, y));
+                this.hexes.add(new Hex(x, y));
                 // ctx.font = "15px Comic Sans MS";
                 // ctx.fillStyle = "red";
                 // ctx.textAlign = "center";
