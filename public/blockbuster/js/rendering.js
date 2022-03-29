@@ -51,6 +51,6 @@ export class Rendering {
     }
     start = () => {};
     update = () => {
-        console.log("boom2");
+        console.log("boom1");
     };
 }
