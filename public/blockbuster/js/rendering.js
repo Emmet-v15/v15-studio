@@ -46,11 +46,11 @@ export class Rendering {
             // };
 
             this.start();
-            window.requestAnimFrame(this.update);
+            requestAnimFrame(this.update);
         };
     }
     start = () => {};
     update = () => {
-        window.requestAnimFrame(super.update);
+        requestAnimFrame(super.update);
     };
 }
