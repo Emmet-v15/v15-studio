@@ -38,4 +38,6 @@ class BlockBuster extends Rendering {
     }
 }
 
-const game = new BlockBuster();
+window.addEventListener("load", (event) => {
+    const game = new BlockBuster();
+});
