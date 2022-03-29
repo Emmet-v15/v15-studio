@@ -26,14 +26,14 @@ export class Rendering {
                 e.preventDefault();
             };
             document.addEventListener("mousemove", (event) => {
-                (mouse.x = event.clientX), (mouse.y = event.clientY);
+                (this.mouse.x = event.clientX), (this.mouse.y = event.clientY);
             });
             document.addEventListener("mousedown", (event) => {
-                mouse.down[event.button] = true;
+                this.mouse.down[event.button] = true;
                 event.preventDefault();
             });
             document.addEventListener("mouseup", (event) => {
-                mouse.down[event.button] = false;
+                this.mouse.down[event.button] = false;
                 event.preventDefault();
             });
 
