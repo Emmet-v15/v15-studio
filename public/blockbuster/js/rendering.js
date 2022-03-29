@@ -44,7 +44,7 @@ export class Rendering {
 
         this.ctx = canvas.getContext("2d", { alpha: false });
 
-        start();
+        this.start();
         requestAnimFrame(this.update);
     }
     start = () => {};
