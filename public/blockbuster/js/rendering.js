@@ -1,5 +1,4 @@
 /** @type {CanvasRenderingContext2D} */
-let canvas;
 let mouse = { down: [false, false, false], x: 0, y: 0 };
 
 window.requestAnimFrame =
@@ -13,10 +12,6 @@ window.requestAnimFrame =
     };
 
 window.addEventListener("load", (event) => {
-    canvas = document.getElementById("canvas");
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-
     document.oncontextmenu = (e) => {
         e.preventDefault();
     };
@@ -39,15 +34,17 @@ window.addEventListener("load", (event) => {
     //             break;
     //     }
     // };
-
-    start();
-    update();
 });
 
 export class Rendering {
     constructor(canvas) {
         this.canvas = canvas;
+        this.canvas.width = innerWidth;
+        this.canvas.height = innerHeight;
+
         this.ctx = canvas.getContext("2d", { alpha: false });
+
+        start();
         requestAnimFrame(this.update);
     }
     start = () => {};
