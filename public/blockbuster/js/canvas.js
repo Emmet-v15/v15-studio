@@ -37,4 +37,4 @@ class BlockBuster extends Rendering {
     }
 }
 
-BlockBuster();
+const game = new BlockBuster();
