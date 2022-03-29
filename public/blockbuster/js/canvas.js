@@ -39,6 +39,5 @@ class BlockBuster extends Rendering {
 }
 
 window.addEventListener("load", (event) => {
-    canvas = document.getElementById("canvas");
-    const game = new BlockBuster(canvas);
+    const game = new BlockBuster(document.getElementById("canvas"));
 });
