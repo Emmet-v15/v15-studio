@@ -29,7 +29,7 @@ export class Rendering {
                 (mouse.x = event.clientX), (mouse.y = event.clientY);
             });
             document.addEventListener("mousedown", (event) => {
-                hexes.updateClicks();
+                this.hexes.updateClicks();
                 mouse.down[event.button] = true;
                 event.preventDefault();
             });
