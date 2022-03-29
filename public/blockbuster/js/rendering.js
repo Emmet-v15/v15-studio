@@ -51,6 +51,6 @@ export class Rendering {
     }
     start = () => {};
     update = () => {
-        window.requestAnimFrame(this.update);
+        window.requestAnimFrame(super.update);
     };
 }
