@@ -2,7 +2,7 @@ export class Hex {
     constructor(x, y, r) {
         this.verts = [];
         this.color = "#121212";
-
+        const a = (2 * Math.PI) / 6;
         for (var i = 0; i < 6; i++) {
             let _x = x + r * Math.cos(a * i);
             let _y = y + r * Math.sin(a * i);
