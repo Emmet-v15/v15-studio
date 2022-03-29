@@ -1,13 +1,11 @@
 export class Hex {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(x, y, r) {
         this.verts = [];
         this.color = "#121212";
 
         for (var i = 0; i < 6; i++) {
-            let _x = this.x + r * Math.cos(a * i);
-            let _y = this.y + r * Math.sin(a * i);
+            let _x = x + r * Math.cos(a * i);
+            let _y = y + r * Math.sin(a * i);
             this.verts.push([_x, _y]);
             console.log(_x, _y);
         }
@@ -47,7 +45,7 @@ export class Hex {
                 c = !c;
             }
         }
-        this.color = c ? "rgba(12, 12, 12, 100)" : "#121212";
+        this.color = c ? "rgba(12, 12, 12, 0)" : "#121212";
         return c;
     }
 }
