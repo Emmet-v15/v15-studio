@@ -33,7 +33,7 @@ class BlockBuster extends Rendering {
         this.ctx.fillStyle = "#000";
         this.ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        this.hexes.draw();
+        this.hexes.update();
     }
 }
 

@@ -13,6 +13,11 @@ export class Hex {
         }
     }
 
+    update() {
+        this.onClick();
+        this.draw();
+    }
+
     draw() {
         ctx.strokeStyle = "#FFFFFF";
         ctx.beginPath();
@@ -28,7 +33,7 @@ export class Hex {
         }
     }
 
-    isClicked() {
+    onClick() {
         let i, j;
         let c = false;
         for (i = 0, j = this.verts.length - 1; i < this.verts.length; j = i++) {
@@ -42,7 +47,7 @@ export class Hex {
                 c = !c;
             }
         }
-        this.color = c ? "rgba(12, 12, 12, 100  )" : "#121212";
+        this.color = c ? "rgba(12, 12, 12, 100)" : "#121212";
         return c;
     }
 }
