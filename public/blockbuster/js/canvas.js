@@ -34,6 +34,7 @@ class BlockBuster extends Rendering {
         this.ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         this.hexes.update();
+        console.log("Boom1");
     }
 }
 

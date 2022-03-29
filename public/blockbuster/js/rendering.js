@@ -46,9 +46,11 @@ export class Rendering {
             // };
 
             this.start();
-            requestAnimFrame(this.update);
+            this.update();
         };
     }
     start = () => {};
-    update = () => {};
+    update = () => {
+        console.log("boom2");
+    };
 }
