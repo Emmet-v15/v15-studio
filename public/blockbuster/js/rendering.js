@@ -45,10 +45,12 @@ export class Rendering {
         this.ctx = canvas.getContext("2d", { alpha: false });
 
         this.start();
-        requestAnimFrame(this.update);
+
+        while (true) {
+            requestAnimFrame();
+            this.update();
+        }
     }
     start = () => {};
-    update = () => {
-        requestAnimFrame(this.update);
-    };
+    update = () => {};
 }

@@ -3,6 +3,8 @@ import { Rendering } from "./rendering.js";
 
 class BlockBuster extends Rendering {
     start() {
+        console.log("test2");
+
         const a = (2 * Math.PI) / 6;
         const r = window.innerHeight / 8;
         const startx = window.innerWidth / 2 - r * 4.5;
@@ -29,15 +31,13 @@ class BlockBuster extends Rendering {
         }
     }
     update() {
-        requestAnimFrame(this.update);
         this.ctx.fillStyle = "#000";
         this.ctx.fillRect(0, 0, canvas.width, canvas.height);
-
         this.hexes.update();
         console.log("test1");
     }
 }
 
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
     const game = new BlockBuster(document.getElementById("canvas"));
 });
