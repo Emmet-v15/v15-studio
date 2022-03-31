@@ -51,5 +51,7 @@ export class Rendering {
         }
     }
     start = () => {};
-    update = () => {};
+    update = () => {
+        console.log("parent update");
+    };
 }
