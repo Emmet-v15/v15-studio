@@ -47,8 +47,7 @@ export class Rendering {
         this.start();
 
         while (true) {
-            requestAnimFrame();
-            this.update();
+            requestAnimFrame(this.update);
         }
     }
     start = () => {};
