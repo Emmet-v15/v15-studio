@@ -12,17 +12,87 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
-                background-color: black;
+                background-color: #121212;
                 color: #fff;
                 font-family: "Roboto", sans-serif;
-                font-size: 16px;
+                font-size: 32px;
                 font-weight: 400;
                 line-height: 1.5;
                 text-align: center;
             }
+
+            #top-navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                padding-top: 10px;
+                background-color: #1f1f1f;
+                z-index: 1;
+            }
+
+            #container0 {
+                background-color: #1b1b1b;
+                padding-left: 16px;
+                padding-right: 16px;
+                padding-top: 100px;
+                padding-bottom: 100px;
+
+                margin-left: 100px;
+                margin-right: 100px;
+                margin-top: 100px;
+                margin-bottom: 100px;
+            }
+
+            #underline {
+                padding-bottom: 3px;
+                border-bottom: 5px solid #ffa500;
+            }
+
+            .rounded {
+                border-radius: 10px;
+                border: 2px solid #1f1f1f;
+            }
+
+            .shadow {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            .rainbow-text {
+                background-image: repeating-linear-gradient(
+                    45deg,
+                    rgb(120, 16, 120),
+                    rgb(60, 0, 104),
+                    rgb(0, 0, 204),
+                    rgb(0, 102, 0),
+                    rgb(153, 153, 0),
+                    rgb(204, 132, 0),
+                    rgb(204, 0, 0),
+                    rgb(120, 16, 120)
+                );
+                background-size: 800% 800%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: rainbow 8s ease infinite;
+            }
+            @keyframes rainbow {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 25%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
         </style>
     </head>
     <body>
-        I'm quitting the job. No more programming! i am now free.
+        <div id="top-navbar">V15 Studio</div>
+        <div id="container0" class="rounded shadow">
+            I'm <span id="underline" class="rainbow-text">quitting</span> the job. No more programming! i am now free.
+        </div>
     </body>
 </html>
