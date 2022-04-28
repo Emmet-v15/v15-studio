@@ -31,7 +31,7 @@ async function fetchTimetable() {
 
     if (cells.length == 0) {
         console.log("Failed to fetch, Retrying...");
-        fetchData();
+        fetchTimetable();
         return;
     }
     data = {
