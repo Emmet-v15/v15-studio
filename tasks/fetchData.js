@@ -58,7 +58,7 @@ async function saveThumbnail() {
     });
 
     const page = await browser.newPage();
-    await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
+    await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
     await page.screenshot({
         path: path.join(__dirname, "../public/timetable/thumbnail.png"),
         fullPage: true,
