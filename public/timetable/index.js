@@ -1,7 +1,7 @@
 window.onload = async () => {
     const table = document.getElementsByClassName("Timetable")[0].getElementsByTagName("tbody")[0];
     const timestamp = document.getElementById("timestamp");
-    const response = await fetch("data.json");
+    const response = await fetch("timetableData.json");
     const { data } = await response.json();
 
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];

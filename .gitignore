@@ -124,3 +124,6 @@ config.json
 
 # Platform specific data
 package-lock.json
+
+# passwords and other data
+.env

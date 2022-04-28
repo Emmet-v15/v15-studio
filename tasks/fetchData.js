@@ -1,10 +1,11 @@
+require("dotenv").config();
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 const { username, password, timetableURL } = require("../config.json");
 var data = {};
 
-async function fetchData() {
+async function fetchTimetable() {
     let browser = await puppeteer.launch({
         devtools: false,
         userDataDir: "./cache",
@@ -37,9 +38,35 @@ async function fetchData() {
         timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0),
     };
-    fs.writeFileSync(path.join(__dirname, "../public/timetable/data.json"), JSON.stringify({ data: data }, null, 4));
-    console.log(`Fetched Data at ${new Date().getHours()}:${new Date().getMinutes()}`);
-    setTimeout(fetchData, 60 * 60 * 1000);
+    fs.writeFileSync(
+        path.join(__dirname, "../public/timetable/timetableData.json"),
+        JSON.stringify({ data: data }, null, 4)
+    );
+
+    setTimeout(() => {
+        saveThumbnail();
+    }, 1 * 1000);
+
+    setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
 
-fetchData();
+async function saveThumbnail() {
+    let browser = await puppeteer.launch({
+        devtools: false,
+        userDataDir: "./cache",
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+
+    const page = await browser.newPage();
+    await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
+    await page.screenshot({
+        path: path.join(__dirname, "../public/timetable/thumbnail.png"),
+        fullPage: true,
+    });
+
+    await browser.close();
+
+    setTimeout(fetchTimetable, 60 * 60 * 1000);
+}
+
+fetchTimetable();
