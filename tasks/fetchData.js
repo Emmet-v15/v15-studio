@@ -25,11 +25,7 @@ async function fetchTimetable() {
             return Array.from(columns, (column) => column.innerText);
         });
     });
-
-    setTimeout(() => {
-        page.close();
-    }, 60 * 1000);
-
+    page.close();
     if (cells.length == 0) {
         console.log("Failed to fetch, Retrying...");
         fetchTimetable();
