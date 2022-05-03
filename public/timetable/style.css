@@ -15,7 +15,7 @@ body {
 }
 
 body h1 {
-    padding-top: 25vh;
+    padding-top: calc(25vh - 50px);
     /* text-align: center; */
     color: rgb(209, 207, 204) !important;
 }
