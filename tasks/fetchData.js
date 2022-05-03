@@ -5,18 +5,13 @@ const path = require("path");
 const { username, password, timetableURL } = require("../config.json");
 const http = require("http");
 var data = {};
-let browser;
 
-(async () => {
-    browser = await puppeteer.launch({
+async function fetchTimetable() {
+    const browser = await puppeteer.launch({
         devtools: false,
         userDataDir: "./cache",
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
-    fetchTimetable();
-})();
-
-async function fetchTimetable() {
     const page = await browser.newPage();
     await page.authenticate({ username: username, password: password });
 
@@ -49,26 +44,25 @@ async function fetchTimetable() {
     );
 
     setTimeout(() => {
-        saveThumbnail();
-    }, 60 * 1000);
+        saveThumbnail(browser);
+    }, 1 * 1000);
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
 
-async function saveThumbnail() {
+async function saveThumbnail(browser) {
     http.get("http://example.com/category", async (res) => {
         const page = await browser.newPage();
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
-
+        await page.setViewport({ width: 512, height: 512, deviceScaleFactor: 2 });
         await page.screenshot({
             path: path.join(__dirname, "../public/timetable/thumbnail.png"),
             fullPage: true,
         });
-
         await browser.close();
     }).on("error", function (e) {
         console.log("Failed to create new Thumbnail.");
     });
-
-    setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
+
+fetchTimetable();
