@@ -5,7 +5,7 @@ const path = require("path");
 const { username, password, timetableURL } = require("../config.json");
 const http = require("http");
 var data = {};
-const browser = await puppeteer.launch({
+const browser = puppeteer.launch({
     devtools: false,
     userDataDir: "./cache",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
