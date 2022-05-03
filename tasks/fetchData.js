@@ -3,15 +3,15 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 const { username, password, timetableURL } = require("../config.json");
+const http = require("http");
 var data = {};
+const browser = await puppeteer.launch({
+    devtools: false,
+    userDataDir: "./cache",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+});
 
 async function fetchTimetable() {
-    let browser = await puppeteer.launch({
-        devtools: false,
-        userDataDir: "./cache",
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-
     const page = await browser.newPage();
     await page.authenticate({ username: username, password: password });
 
@@ -26,7 +26,7 @@ async function fetchTimetable() {
     });
 
     setTimeout(() => {
-        browser.close();
+        page.close();
     }, 60 * 1000);
 
     if (cells.length == 0) {
@@ -45,26 +45,25 @@ async function fetchTimetable() {
 
     setTimeout(() => {
         saveThumbnail();
-    }, 1 * 1000);
+    }, 60 * 1000);
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
 
 async function saveThumbnail() {
-    let browser = await puppeteer.launch({
-        devtools: false,
-        userDataDir: "./cache",
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    http.get("http://example.com/category", function (res) {
+        const page = await browser.newPage();
+        await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
+        await page.screenshot({
+            path: path.join(__dirname, "../public/timetable/thumbnail.png"),
+            fullPage: true,
+        });
+    
+        await browser.close();
+    }).on("error", function (e) {
+        console.log("Failed to create new Thumbnail.");
     });
 
-    const page = await browser.newPage();
-    await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
-    await page.screenshot({
-        path: path.join(__dirname, "../public/timetable/thumbnail.png"),
-        fullPage: true,
-    });
-
-    await browser.close();
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
