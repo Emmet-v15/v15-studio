@@ -12,39 +12,39 @@ async function fetchTimetable() {
         userDataDir: "./cache",
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
-    // saveThumbnail(browser);
-    const page = await browser.newPage();
-    await page.authenticate({ username: username, password: password });
+    saveThumbnail(browser);
+    // const page = await browser.newPage();
+    // await page.authenticate({ username: username, password: password });
 
-    await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
+    // await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
 
-    const cells = await page.evaluate(() => {
-        const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
-        return Array.from(rows, (row) => {
-            const columns = row.querySelectorAll("td");
-            return Array.from(columns, (column) => column.innerText);
-        });
-    });
-    if (cells.length == 0) {
-        console.log("Failed to fetch, Retrying...");
-        fetchTimetable();
-        return;
-    }
-    page.close();
-    data = {
-        timestamp: Date.now() + 60 * 60 * 1000,
-        cells: cells.slice(0),
-    };
-    fs.writeFileSync(
-        path.join(__dirname, "../public/timetable/timetableData.json"),
-        JSON.stringify({ data: data }, null, 4)
-    );
+    // const cells = await page.evaluate(() => {
+    //     const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
+    //     return Array.from(rows, (row) => {
+    //         const columns = row.querySelectorAll("td");
+    //         return Array.from(columns, (column) => column.innerText);
+    //     });
+    // });
+    // if (cells.length == 0) {
+    //     console.log("Failed to fetch, Retrying...");
+    //     fetchTimetable();
+    //     return;
+    // }
+    // page.close();
+    // data = {
+    //     timestamp: Date.now() + 60 * 60 * 1000,
+    //     cells: cells.slice(0),
+    // };
+    // fs.writeFileSync(
+    //     path.join(__dirname, "../public/timetable/timetableData.json"),
+    //     JSON.stringify({ data: data }, null, 4)
+    // );
 
-    setTimeout(() => {
-        saveThumbnail(browser);
-    }, 1 * 1000);
+    // setTimeout(() => {
+    //     saveThumbnail(browser);
+    // }, 1 * 1000);
 
-    setTimeout(fetchTimetable, 60 * 60 * 1000);
+    // setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
 
 async function saveThumbnail(browser) {
