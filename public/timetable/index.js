@@ -108,4 +108,5 @@ window.onload = async () => {
     refreshTimestamp();
 
     document.getElementById("day").innerHTML = days[getDay()];
+    document.querySelector('meta[property="og:title"]').setAttribute("content", days[getDay()]);
 };
