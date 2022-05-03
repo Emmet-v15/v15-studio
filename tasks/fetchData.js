@@ -59,6 +59,7 @@ async function saveThumbnail() {
     http.get("http://example.com/category", async (res) => {
         const page = await browser.newPage();
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
+
         await page.screenshot({
             path: path.join(__dirname, "../public/timetable/thumbnail.png"),
             fullPage: true,
