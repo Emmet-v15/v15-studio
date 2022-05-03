@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@media (prefers-color-scheme: dark) {}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+
+body {
+    background-color: #121212 !important;
+}
+
+body h1 {
+    padding-top: calc(25vh - 100px);
+    /* text-align: center; */
+    color: rgb(209, 207, 204) !important;
+}
+
+body h2, h3 {
+    padding-top: 2px;
+    /* text-align: center; */
+    color: rgb(209, 207, 204) !important;
+}
+
+.timetable {
+    font-size: max(16px, 2vw);
+    border-color: black !important;
+    table-layout: auto;
+    width: max(50%, 341px);
+    background-color: rgba(255,255,255,.09) !important;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
+    margin: 25px auto;
+    position: center;
+}
+
+
+.timetable thead tr td {
+    letter-spacing: 1px;
+    color: rgb(190, 186, 182) !important;
+    padding: 8px;
+}
+
+.timetable tbody tr td {
+    background-color: rgba(255,255,255,.09);
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
+    color: rgb(190, 186, 182) !important;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    outline: dashed 1px black;
+    /* Setup */
+    position: absolute;
+    text-align: center;
+    font-size: clamp(1rem, 2.5vw, 2rem);
+}
