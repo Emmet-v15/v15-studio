@@ -5,11 +5,16 @@ const path = require("path");
 const { username, password, timetableURL } = require("../config.json");
 const http = require("http");
 var data = {};
-const browser = puppeteer.launch({
-    devtools: false,
-    userDataDir: "./cache",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-});
+let browser;
+
+(async () => {
+    browser = await puppeteer.launch({
+        devtools: false,
+        userDataDir: "./cache",
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    fetchTimetable();
+})();
 
 async function fetchTimetable() {
     const page = await browser.newPage();
@@ -66,5 +71,3 @@ async function saveThumbnail() {
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
-
-fetchTimetable();
