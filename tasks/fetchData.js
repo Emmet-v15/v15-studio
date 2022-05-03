@@ -25,12 +25,12 @@ async function fetchTimetable() {
             return Array.from(columns, (column) => column.innerText);
         });
     });
-    page.close();
     if (cells.length == 0) {
         console.log("Failed to fetch, Retrying...");
         fetchTimetable();
         return;
     }
+    page.close();
     data = {
         timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0),
