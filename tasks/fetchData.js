@@ -12,6 +12,7 @@ async function fetchTimetable() {
         userDataDir: "./cache",
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+    // saveThumbnail(browser);
     const page = await browser.newPage();
     await page.authenticate({ username: username, password: password });
 
@@ -54,7 +55,7 @@ async function saveThumbnail(browser) {
     http.get("http://example.com/category", async (res) => {
         const page = await browser.newPage();
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
-        await page.setViewport({ width: 512, height: 512, deviceScaleFactor: 2 });
+        await page.setViewport({ width: 2048, height: 1024, deviceScaleFactor: 5 });
         await page.screenshot({
             path: path.join(__dirname, "../public/timetable/thumbnail.png"),
             fullPage: true,
