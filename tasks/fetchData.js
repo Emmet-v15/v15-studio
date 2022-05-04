@@ -27,6 +27,7 @@ async function fetchTimetable() {
     });
     if (cells.length == 0) {
         console.log("Failed to fetch, Retrying...");
+        await browser.close();
         fetchTimetable();
         return;
     }
@@ -60,6 +61,7 @@ async function saveThumbnail(browser) {
             .catch((e) => void 0);
         await browser.close();
     }).on("error", function (e) {
+        browser.close();
         console.log("Failed to create new Thumbnail.");
     });
 }
