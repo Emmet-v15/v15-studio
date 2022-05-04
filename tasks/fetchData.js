@@ -48,7 +48,7 @@ async function fetchTimetable() {
 }
 
 async function saveThumbnail(browser) {
-    http.get("https://v15.studio/timetable", async (res) => {
+    http.get("http://v15.studio/timetable", async (res) => {
         const page = await browser.newPage();
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
