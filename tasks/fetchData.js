@@ -12,7 +12,7 @@ async function fetchTimetable() {
         userDataDir: "./cache",
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
-    saveThumbnail(browser);
+    // saveThumbnail(browser);
     const page = await browser.newPage();
     await page.authenticate({ username: username, password: password });
 
