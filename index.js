@@ -17,7 +17,7 @@ app.use(subdomain("api", require("./api/router")));
 
 https
     .createServer(options, (req, res) => {
-        console.log(req);
+        console.log(`{${req.socket.remoteAddress}}: [${req.method} ${req.url}]`);
         app.handle(req, res);
     })
     .listen(port, (err) => {
