@@ -1,0 +1,7 @@
+PROBLEM DESCRIPTION
+STAKEHOLDERS
+JUSTIFICATION
+
+170844-specification-accredited-a-level-gce-computer-science-h446.pdf
+computational approach
+abstraction, decomposition, recusrion
