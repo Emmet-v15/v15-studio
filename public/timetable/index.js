@@ -2,10 +2,10 @@ window.onload = async () => {
     const table = document.getElementsByClassName("Timetable")[0].getElementsByTagName("tbody")[0];
     const timestamp = document.getElementById("timestamp");
     const response = await fetch("timetableData.json");
-    const { data } = await response.json();
+    const { data, thumbnail } = await response.json();
 
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
+    let count;
     const getLessons = () => {
         let lessons = [[], [], [], [], []];
         data.cells.forEach((cell) => {
@@ -14,65 +14,66 @@ window.onload = async () => {
                 for (let i = 0; i < cell.length; i++) {
                     const slot = cell[i];
                     if (slot.length === 0) continue;
+                    count++;
                     lessons[i].push(
-                        slot.match(
-                            /(?<startTime>\d\d:\d\d) - (?<endTime>\d\d:\d\d) (?<course>.*) A Level .* (?<room>.*)/
-                        ).groups
+                        slot.match(/(?<startTime>\d\d:\d\d) - (?<endTime>\d\d:\d\d) (?<course>.*) A Level .* (?<room>.*)/).groups
                     );
                 }
             }
         });
         return lessons;
     };
-
     const getDay = () => {
-        let lessons = getLessons();
-        function addDay() {
-            schoolDay++;
-            schoolDay = schoolDay >= 5 ? schoolDay - 5 : schoolDay;
-        }
-
-        function lessonsOver() {
-            return (
-                lessons[schoolDay] &&
-                !lessons[schoolDay]
-                    .map((lesson) => {
-                        let date = new Date();
-                        date.setHours(lesson.endTime.split(":")[0]);
-                        return date < new Date();
-                    })
-                    .includes(false)
-            );
-        }
-
-        function checkLessons() {
-            while (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
-                addDay();
+        if (count) {
+            let lessons = getLessons();
+            function addDay() {
+                schoolDay++;
+                schoolDay = schoolDay >= 5 ? schoolDay - 5 : schoolDay;
             }
+
+            function lessonsOver() {
+                return (
+                    lessons[schoolDay] &&
+                    !lessons[schoolDay]
+                        .map((lesson) => {
+                            let date = new Date();
+                            date.setHours(lesson.endTime.split(":")[0]);
+                            return date < new Date();
+                        })
+                        .includes(false)
+                );
+            }
+
+            function checkLessons() {
+                while (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
+                    addDay();
+                }
+            }
+            let schoolDay = new Date().getUTCDay();
+            schoolDay = schoolDay >= 7 ? schoolDay - 7 : schoolDay;
+
+            if (schoolDay >= 6 || schoolDay == 0) {
+                schoolDay = 0;
+            } else schoolDay--;
+
+            if (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
+                checkLessons();
+            } else if (lessonsOver()) {
+                addDay();
+                checkLessons();
+            }
+            return schoolDay;
         }
-        let schoolDay = new Date().getUTCDay();
-        schoolDay = schoolDay >= 7 ? schoolDay - 7 : schoolDay;
-
-        if (schoolDay >= 6 || schoolDay == 0) {
-            schoolDay = 0;
-        } else schoolDay--;
-
-        if (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
-            checkLessons();
-        } else if (lessonsOver()) {
-            addDay();
-            checkLessons();
-        }
-
-        return schoolDay;
+        return "Vacation";
     };
 
-    getLessons()[getDay()].forEach((lesson) => {
-        let row = table.insertRow(-1);
-        row.insertCell(0).innerHTML = lesson.startTime + "-" + lesson.endTime;
-        row.insertCell(1).innerHTML = lesson.course.replace(" Linear", "");
-        row.insertCell(2).innerHTML = lesson.room;
-    });
+    if (count)
+        getLessons()[getDay()].forEach((lesson) => {
+            let row = table.insertRow(-1);
+            row.insertCell(0).innerHTML = lesson.startTime + "-" + lesson.endTime;
+            row.insertCell(1).innerHTML = lesson.course.replace(" Linear", "");
+            row.insertCell(2).innerHTML = lesson.room;
+        });
 
     const refreshTimestamp = () => {
         let date = new Date();
@@ -107,5 +108,7 @@ window.onload = async () => {
 
     refreshTimestamp();
 
-    document.getElementById("day").innerHTML = days[getDay()];
+    if (getDay() == "Vacation") document.getElementById("day").innerHTML = "Vacation";
+    else document.getElementById("day").innerHTML = days[getDay()];
+    document.querySelector('meta[property="og:image"]').setAttribute("content", thumbnail);
 };

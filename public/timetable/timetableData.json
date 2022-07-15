@@ -1,6 +1,6 @@
 {
     "data": {
-        "timestamp": 1651578703208,
+        "timestamp": 1657910963923,
         "cells": [
             [],
             [
@@ -8,7 +8,7 @@
                 "00",
                 "",
                 "",
-                "09:00 - 10:30 Maths Linear A Level (Year 1 of 2) QYP-MAT-ALV-F12-YL6-C02 KLane P-NT04",
+                "",
                 "",
                 ""
             ],
@@ -68,10 +68,10 @@
                 "",
                 "45",
                 "",
-                "10:35 - 12:05 Computer Science Linear A Level (Year 1 of 2) QYP-COS-ALV-F12-YL6-E01 DLA P-C05",
                 "",
-                "10:35 - 12:05 Maths Linear A Level (Year 1 of 2) QYP-MAT-ALV-F12-YL6-C02 KLane P-NT04",
-                "10:35 - 12:05 Physics Linear A Level (Year 1 of 2) QYP-PHY-ALV-F12-YL6-B01 UCOX P-B09"
+                "",
+                "",
+                ""
             ],
             [
                 "11",
@@ -147,10 +147,10 @@
                 "13",
                 "00",
                 "",
-                "12:50 - 13:20 Tutorial A Level L6 TYP-TUT-ASL-F11-YL6-012 RGD P-NS04",
                 "",
-                "12:50 - 13:20 Tutorial A Level L6 TYP-TUT-ASL-F11-YL6-012 RGD P-NS04",
-                "12:50 - 14:20 Maths Linear A Level (Year 1 of 2) QYP-MAT-ALV-F12-YL6-C02 KLane P-NT04"
+                "",
+                "",
+                ""
             ],
             [
                 "15",
@@ -165,8 +165,8 @@
                 "30",
                 "",
                 "",
-                "13:25 - 14:55 Computer Science Linear A Level (Year 1 of 2) QYP-COS-ALV-F12-YL6-E01 DLA P-C05",
-                "13:25 - 14:55 Physics Linear A Level (Year 1 of 2) QYP-PHY-ALV-F12-YL6-B01 UCOX P-B09",
+                "",
+                "",
                 ""
             ],
             [
@@ -217,9 +217,9 @@
                 "15",
                 "00",
                 "",
-                "15:00 - 16:30 Physics Linear A Level (Year 1 of 2) QYP-PHY-ALV-F12-YL6-B01 UCOX P-B09",
                 "",
-                "15:00 - 16:30 Computer Science Linear A Level (Year 1 of 2) QYP-COS-ALV-F12-YL6-E01 DLA P-C05",
+                "",
+                "",
                 ""
             ],
             [
@@ -284,5 +284,6 @@
                 ""
             ]
         ]
-    }
+    },
+    "thumbnail": "https://v15.studio/timetable/thumbnail_jknp1V.png"
 }
