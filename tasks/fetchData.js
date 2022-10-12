@@ -28,13 +28,11 @@ async function fetchTimetable() {
     });
     if (cells.length == 0) {
         console.log("Failed to fetch, Retrying...");
-        await browser.close();
         setTimeout(() => {
             fetchTimetable();
         }, 10000);
-        return;
     }
-    page.close();
+    await browser.close();
     data = {
         timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0),
@@ -42,7 +40,7 @@ async function fetchTimetable() {
     fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
 
     setTimeout(() => {
-        saveThumbnail(browser);
+        saveThumbnail();
     }, 1 * 1000);
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
@@ -55,8 +53,13 @@ function generateRandomString() {
     return text;
 }
 
-async function saveThumbnail(browser) {
+async function saveThumbnail() {
     http.get("http://v15.studio/timetable", async (res) => {
+        const browser = await puppeteer.launch({
+            devtools: false,
+            userDataDir: "./cache",
+            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        });
         const page = await browser.newPage();
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
@@ -87,10 +90,11 @@ async function saveThumbnail(browser) {
             .catch((e) => {
                 console.log(e);
             });
-    }).on("error", (e) => {
-        browser.close();
+    }).on("error", async (e) => {
+        await browser.close();
         console.log("Failed to create new Thumbnail.");
     });
 }
 
 fetchTimetable();
+console.log("testing");

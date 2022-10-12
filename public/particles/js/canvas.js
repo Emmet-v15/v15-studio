@@ -83,15 +83,8 @@ let resolve_collisions = function (ip, ctx) {
         //balls[i].color = [0, 255, 0, 1];
         let ball_1 = balls[i];
 
-        let speed =
-            1 +
-            Math.sqrt(
-                (ball_1.x - ball_1.px) * (ball_1.x - ball_1.px) + (ball_1.y - ball_1.py) * (ball_1.y - ball_1.py)
-            );
-        let alpha = Math.max(
-            Math.min(ball_1.color[3] * Math.max(Math.abs(ball_1.fx), Math.abs(ball_1.fy) + 0.2), 1),
-            0.3
-        );
+        let speed = 1 + Math.sqrt((ball_1.x - ball_1.px) * (ball_1.x - ball_1.px) + (ball_1.y - ball_1.py) * (ball_1.y - ball_1.py));
+        let alpha = Math.max(Math.min(ball_1.color[3] * Math.max(Math.abs(ball_1.fx), Math.abs(ball_1.fy) + 0.2), 1), 0.3);
         let red = Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) + ((innerHeight - ball_1.y) / innerHeight) * 255;
 
         let diff_x_mouse = ball_1.x - mouse.x;
@@ -126,10 +119,7 @@ let resolve_collisions = function (ip, ctx) {
 
         ball_1.fillstyle = `rgb(
             ${(200 / dist_mouse) * alpha},
-            ${
-                (Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) + ((innerHeight - ball_1.y) / innerHeight) * 255) *
-                alpha
-            },
+            ${(Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) + ((innerHeight - ball_1.y) / innerHeight) * 255) * alpha},
             ${(ball_1.color[2] + 10) * alpha})`;
 
         let n = balls.length;
@@ -186,15 +176,7 @@ let resolve_collisions = function (ip, ctx) {
                     ball_1.link = ball_2;
                     ball_2.link = ball_1;
                     //let speed = (1+Math.sqrt((ball_1.x - ball_1.px)*(ball_1.x - ball_1.px), (ball_1.x - ball_1.py)*(ball_1.x - ball_1.py)))*3;
-                    drawLine(
-                        ctx,
-                        ball_1.x,
-                        ball_1.y,
-                        ball_2.x,
-                        ball_2.y,
-                        ball_1.radius + ball_2.radius,
-                        ball_1.fillstyle
-                    );
+                    drawLine(ctx, ball_1.x, ball_1.y, ball_2.x, ball_2.y, ball_1.radius + ball_2.radius, ball_1.fillstyle);
                 } else {
                     ball_1.link == undefined;
                     ball_2.link == undefined;
@@ -334,6 +316,12 @@ window.onload = function () {
                 break;
             case "c":
                 clayMode = !clayMode;
+                if (!clayMode) {
+                    for (let i = 0; i < balls.length; i++) {
+                        balls[i].fy = 0;
+                        balls[i].fx = 0;
+                    }
+                }
                 break;
         }
     };
