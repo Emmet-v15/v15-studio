@@ -39,6 +39,7 @@ async function fetchTimetable() {
         cells: cells.slice(0),
     };
     fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
+    console.log("Fetched timetable data");
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
