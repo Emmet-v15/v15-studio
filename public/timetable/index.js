@@ -5,10 +5,13 @@ window.onload = async () => {
     const { data, thumbnail } = await response.json();
 
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    let count;
+
+    let count = 0;
+    
     const getLessons = () => {
         let lessons = [[], [], [], [], []];
         data.cells.forEach((cell) => {
+
             if (cell.length) {
                 cell = cell.slice(cell.length - 5);
                 for (let i = 0; i < cell.length; i++) {
@@ -23,9 +26,10 @@ window.onload = async () => {
         });
         return lessons;
     };
+    let lessons = getLessons();
+
     const getDay = () => {
         if (count) {
-            let lessons = getLessons();
             function addDay() {
                 schoolDay++;
                 schoolDay = schoolDay >= 5 ? schoolDay - 5 : schoolDay;
