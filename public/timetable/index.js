@@ -1,4 +1,7 @@
+console.log("Timetable loaded");
+
 window.onload = async () => {
+    console.log("Window loaded");
     const table = document.getElementsByClassName("Timetable")[0].getElementsByTagName("tbody")[0];
     const timestamp = document.getElementById("timestamp");
     const response = await fetch("timetableData.json");
@@ -27,6 +30,7 @@ window.onload = async () => {
         return lessons;
     };
     let lessons = getLessons();
+    console.log("got lessons");
 
     const getDay = () => {
         if (count) {
@@ -78,6 +82,8 @@ window.onload = async () => {
             row.insertCell(1).innerHTML = lesson.course.replace(" Linear", "");
             row.insertCell(2).innerHTML = lesson.room;
         });
+    
+    console.log("got day");
 
     const refreshTimestamp = () => {
         let date = new Date();
@@ -111,8 +117,10 @@ window.onload = async () => {
     };
 
     refreshTimestamp();
+    console.log("refreshed timestamp");
 
     if (getDay() == "Vacation") document.getElementById("day").innerHTML = "Vacation";
     else document.getElementById("day").innerHTML = days[getDay()];
     document.querySelector('meta[property="og:image"]').setAttribute("content", thumbnail);
+    console.log("set day");
 };
