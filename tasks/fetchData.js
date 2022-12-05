@@ -32,6 +32,7 @@ async function fetchTimetable() {
             fetchTimetable();
         }, 10000);
     }
+
     await browser.close();
     data = {
         timestamp: Date.now() + 60 * 60 * 1000,
@@ -39,62 +40,57 @@ async function fetchTimetable() {
     };
     fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
 
-    setTimeout(() => {
-        saveThumbnail();
-    }, 1 * 1000);
-
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }
 // generate 6 random numbers and letters between 0 and 9
-function generateRandomString() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-    return text;
-}
+// function generateRandomString() {
+//     var text = "";
+//     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//     for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+//     return text;
+// }
 
-async function saveThumbnail() {
-    http.get("http://v15.studio/timetable", async (res) => {
-        const browser = await puppeteer.launch({
-            devtools: false,
-            userDataDir: "./cache",
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        });
-        const page = await browser.newPage();
-        await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
-        await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
-        await page
-            .screenshot({
-                path: `${__dirname}/thumbnail-temp.png`,
-                fullPage: true,
-            })
-            .catch((e) => void 0);
-        await browser.close();
-        const filename = `thumbnail_${generateRandomString()}.png`;
-        var m = JSON.parse(fs.readFileSync(dataJson).toString());
-        m["thumbnail"] = `https://v15.studio/timetable/${filename}`;
-        fs.writeFileSync(dataJson, JSON.stringify(m, null, 4));
+// async function saveThumbnail() {
+//     http.get("http://v15.studio/timetable", async (res) => {
+//         const browser = await puppeteer.launch({
+//             devtools: false,
+//             userDataDir: "./cache",
+//             args: ["--no-sandbox", "--disable-setuid-sandbox"],
+//         });
+//         const page = await browser.newPage();
+//         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
+//         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
+//         await page
+//             .screenshot({
+//                 path: `${__dirname}/thumbnail-temp.png`,
+//                 fullPage: true,
+//             })
+//             .catch((e) => void 0);
+//         await browser.close();
+//         const filename = `thumbnail_${generateRandomString()}.png`;
+//         var m = JSON.parse(fs.readFileSync(dataJson).toString());
+//         m["thumbnail"] = `https://v15.studio/timetable/${filename}`;
+//         fs.writeFileSync(dataJson, JSON.stringify(m, null, 4));
 
-        const thumbnail_path = `${__dirname}/../public/timetable/`;
-        let regex = /thumbnail_.*\.png$/;
-        fs.readdirSync(thumbnail_path)
-            .filter((f) => regex.test(f))
-            .map((f) => fs.unlinkSync(thumbnail_path + f));
+//         const thumbnail_path = `${__dirname}/../public/timetable/`;
+//         let regex = /thumbnail_.*\.png$/;
+//         fs.readdirSync(thumbnail_path)
+//             .filter((f) => regex.test(f))
+//             .map((f) => fs.unlinkSync(thumbnail_path + f));
 
-        sharp(`${__dirname}/thumbnail-temp.png`)
-            .extract({ width: 960, height: 480, left: 120, top: 120 })
-            .toFile(`${thumbnail_path}${filename}`)
-            .then(() => {
-                console.log("Image cropped and saved");
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    }).on("error", async (e) => {
-        await browser.close();
-        console.log("Failed to create new Thumbnail.");
-    });
-}
+//         sharp(`${__dirname}/thumbnail-temp.png`)
+//             .extract({ width: 960, height: 480, left: 120, top: 120 })
+//             .toFile(`${thumbnail_path}${filename}`)
+//             .then(() => {
+//                 console.log("Image cropped and saved");
+//             })
+//             .catch((e) => {
+//                 console.log(e);
+//             });
+//     }).on("error", async (e) => {
+//         await browser.close();
+//         console.log("Failed to create new Thumbnail.");
+//     });
+// }
 
 fetchTimetable();
-console.log("testing");
