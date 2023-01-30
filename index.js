@@ -2,6 +2,7 @@ const https = require("https");
 const fs = require("fs");
 const subdomain = require("express-subdomain");
 const express = require("express");
+const logger = require("./systems/logging/logger");
 const app = express();
 const path = require("path");
 const port = 443;
@@ -23,7 +24,7 @@ https
     })
     .listen(port, (err) => {
         if (err) console.error(err);
-        console.log(`Server started on port ${port}`);
+        logger.ready(`Server started on port ${port}`);
     });
 
 require("./tasks/fetchData");
