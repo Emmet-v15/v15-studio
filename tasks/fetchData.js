@@ -2,6 +2,7 @@ require("dotenv").config();
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
+const logger = require("../systems/logging/logger");
 const { username, password, timetableURL } = require("../config.json");
 const dataJson = path.join(__dirname, "../public/timetable/timetableData.json");
 var data = {};
