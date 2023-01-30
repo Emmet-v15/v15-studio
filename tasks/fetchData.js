@@ -3,20 +3,12 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 const { username, password, timetableURL } = require("../config.json");
-const http = require("http");
-const sharp = require("sharp");
 const dataJson = path.join(__dirname, "../public/timetable/timetableData.json");
 var data = {};
 
 async function fetchTimetable() {
-    const browser = await puppeteer.launch({
-        devtools: false,
-        userDataDir: "./cache",
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
     const page = await browser.newPage();
     await page.authenticate({ username: username, password: password });
-
     await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
 
     const cells = await page.evaluate(() => {
@@ -26,20 +18,23 @@ async function fetchTimetable() {
             return Array.from(columns, (column) => column.innerText);
         });
     });
+    await browser.close();
+
     if (cells.length == 0) {
-        console.log("Failed to fetch, Retrying...");
         setTimeout(() => {
             fetchTimetable();
         }, 10000);
+        logger.warn("Failed to fetch, retrying in 10 seconds");
+        return;
     }
 
-    await browser.close();
     data = {
         timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0),
     };
+
     fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
-    console.log("Fetched timetable data");
+    logger.log("Fetched timetable data");
 
     setTimeout(fetchTimetable, 60 * 60 * 1000);
 }

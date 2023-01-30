@@ -10,20 +10,17 @@ window.onload = async () => {
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
     let count = 0;
-    
+
     const getLessons = () => {
         let lessons = [[], [], [], [], []];
         data.cells.forEach((cell) => {
-
             if (cell.length) {
                 cell = cell.slice(cell.length - 5);
                 for (let i = 0; i < cell.length; i++) {
                     const slot = cell[i];
                     if (slot.length === 0) continue;
                     count++;
-                    lessons[i].push(
-                        slot.match(/(?<startTime>\d\d:\d\d) - (?<endTime>\d\d:\d\d) (?<course>.*) A Level .* (?<room>.*)/).groups
-                    );
+                    lessons[i].push(slot.match(/(?<startTime>\d\d:\d\d) - (?<endTime>\d\d:\d\d) (?<course>.*) A Level .* (?<room>.*)/).groups);
                 }
             }
         });
@@ -82,8 +79,6 @@ window.onload = async () => {
             row.insertCell(1).innerHTML = lesson.course.replace(" Linear", "");
             row.insertCell(2).innerHTML = lesson.room;
         });
-    
-    console.log("got day");
 
     const refreshTimestamp = () => {
         let date = new Date();
