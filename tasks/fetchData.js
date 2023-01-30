@@ -7,6 +7,12 @@ const dataJson = path.join(__dirname, "../public/timetable/timetableData.json");
 var data = {};
 
 async function fetchTimetable() {
+    const browser = await puppeteer.launch({
+        devtools: false,
+        userDataDir: "./cache",
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+
     const page = await browser.newPage();
     await page.authenticate({ username: username, password: password });
     await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
