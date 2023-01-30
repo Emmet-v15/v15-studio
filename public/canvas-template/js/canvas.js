@@ -3,7 +3,6 @@ import { Rendering } from "./rendering.js";
 class Game extends Rendering {
     constructor(params) {
         super(params);
-        console.log("Game constructor");
     }
 
     start() {

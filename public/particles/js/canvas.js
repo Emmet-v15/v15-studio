@@ -271,8 +271,6 @@ let update = function () {
         ctx.fill();
         ctx.stroke();
     }
-
-    //console.log(new Date().getTime() - time);
 };
 
 let add_ball = function (x, y, r) {
