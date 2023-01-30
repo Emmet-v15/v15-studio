@@ -1,12 +1,13 @@
 {
   "dependencies": {
+    "colorette": "^2.0.19",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-subdomain": "^1.0.5",
-    "puppeteer": "^13.5.1",
-    "sharp": "^0.30.4",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
-    "openssl": "^2.0.0"
+    "openssl": "^2.0.0",
+    "puppeteer": "^13.5.1",
+    "sharp": "^0.30.4"
   }
 }
