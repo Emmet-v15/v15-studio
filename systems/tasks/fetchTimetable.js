@@ -94,32 +94,31 @@ async function saveThumbnail(browser) {
 module.exports = async (client) => {
     instantInterval(async () => {
         console.log("Fetching timetable data...");
-        const browser = await puppeteer.launch({ devtools: true });
 
-        // const browser = await puppeteer.launch({
-        //     devtools: true,
-        //     userDataDir: "./cache",
-        //     args: [
-        //         "--disable-setuid-sandbox",
-        //         "--disable-dev-shm-usage",
-        //         "--disable-accelerated-2d-canvas",
-        //         "--no-first-run",
-        //         "--no-zygote",
-        //         "--single-process",
-        //         "--disable-gpu",
-        //         "--disable-background-networking",
-        //         "--disable-default-apps",
-        //         "--disable-extensions",
-        //         "--disable-sync",
-        //         "--disable-translate",
-        //         "--hide-scrollbars",
-        //         "--metrics-recording-only",
-        //         "--mute-audio",
-        //         "--no-default-browser-check",
-        //         "--no-pings",
-        //         "--no-sandbox",
-        //     ],
-        // });
+        const browser = await puppeteer.launch({
+            devtools: true,
+            userDataDir: "./cache",
+            args: [
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-accelerated-2d-canvas",
+                "--no-first-run",
+                "--no-zygote",
+                "--single-process",
+                "--disable-gpu",
+                "--disable-background-networking",
+                "--disable-default-apps",
+                "--disable-extensions",
+                "--disable-sync",
+                "--disable-translate",
+                "--hide-scrollbars",
+                "--metrics-recording-only",
+                "--mute-audio",
+                "--no-default-browser-check",
+                "--no-pings",
+                "--no-sandbox",
+            ],
+        });
 
         const page = await browser.newPage();
         await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
