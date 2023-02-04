@@ -1,6 +1,6 @@
 {
     "data": {
-        "timestamp": 1675539952336,
+        "timestamp": 1675541339601,
         "cells": [
             [],
             [
@@ -284,5 +284,6 @@
                 ""
             ]
         ]
-    }
+    },
+    "thumbnail": "https://v15.studio/timetable/thumbnail_LDP0Wi.png"
 }

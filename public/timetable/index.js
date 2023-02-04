@@ -1,8 +1,10 @@
+const response = await fetch("timetableData.json");
+const { data, thumbnail } = await response.json();
+document.querySelector('meta[property="og:image"]').setAttribute("content", thumbnail);
+
 window.onload = async () => {
     const table = document.getElementsByClassName("Timetable")[0].getElementsByTagName("tbody")[0];
     const timestamp = document.getElementById("timestamp");
-    const response = await fetch("timetableData.json");
-    const { data, thumbnail } = await response.json();
 
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -111,5 +113,4 @@ window.onload = async () => {
 
     if (getDay() == "Vacation") document.getElementById("day").innerHTML = "Vacation";
     else document.getElementById("day").innerHTML = days[getDay()];
-    document.querySelector('meta[property="og:image"]').setAttribute("content", thumbnail);
 };
