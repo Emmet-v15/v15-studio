@@ -2,6 +2,7 @@
   "dependencies": {
     "@sapphire/shapeshift": "^3.8.1",
     "@sapphire/time-utilities": "^1.7.8",
+    "cheerio": "1.0.0-rc.12",
     "colorette": "^2.0.19",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
