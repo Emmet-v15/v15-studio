@@ -98,7 +98,7 @@ module.exports = async (client) => {
                 fetchTimetable();
             }, 10000);
             logger.warn("Failed to fetch, retrying in 10 seconds");
-            return;
+            return await browser.close();
         }
 
         data = {
