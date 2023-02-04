@@ -16,7 +16,6 @@ async function saveThumbnail(browser) {
     http.get("http://v15.studio/timetable", async (res) => {
         const browser = await puppeteer.launch({
             devtools: false,
-            headless: false,
             userDataDir: "./cache",
             args: [
                 "--disable-setuid-sandbox",
