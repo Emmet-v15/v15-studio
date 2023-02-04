@@ -7,11 +7,6 @@ const app = express();
 const path = require("path");
 const port = 443;
 
-const Discord = require("discord.js");
-const client = new Discord.Client();
-
-const exception = require("./systems/logging/exception");
-
 // Server
 
 const options = {
@@ -55,6 +50,8 @@ process.on("SIGINT", function () {
     logger.log("Shutting Down...", "log");
     process.exit();
 });
+
+const client = require("./bot");
 
 process.on("uncaughtException", exception.bind(null, client));
 
