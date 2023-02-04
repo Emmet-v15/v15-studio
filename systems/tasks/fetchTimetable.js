@@ -56,7 +56,7 @@ async function saveThumbnail() {
                 throw e;
             });
     }).on("error", async (e) => {
-        await browser.close();
+        // await browser.close();
         logger.error("Failed to save timetable thumbnail");
     });
 }
