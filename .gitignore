@@ -124,6 +124,7 @@ config.json
 
 # Platform specific data
 package-lock.json
+pnpm-lock.json
 
 # passwords and other data
 .env
