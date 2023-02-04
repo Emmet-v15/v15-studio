@@ -54,8 +54,4 @@ for (const event of readdirSync("./events/")) {
 
 client.login();
 
-module.exports = {
-    client: () => {
-        return client;
-    },
-};
+module.exports = client;
