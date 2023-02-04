@@ -12,22 +12,32 @@ const { instantInterval } = require("../../util/interval");
 const dataJson = path.join(__dirname, "../../public/timetable/timetableData.json");
 var data = {};
 
-async function saveThumbnail() {
+async function saveThumbnail(browser) {
     http.get("http://v15.studio/timetable", async (res) => {
         const browser = await puppeteer.launch({
             devtools: false,
             userDataDir: "./cache",
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
         });
+
+        console.log("Creating new page...");
         const page = await browser.newPage();
-        await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => void 0);
+        console.log("Fetching https://v15.studio/timetable...");
+        await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => {
+            logger.error("Error while fetching timetable: " + e);
+        });
+        console.log("Fetched https://v15.studio/timetable");
         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
+
+        console.log("Saving screenshot...");
         await page
             .screenshot({
                 path: `${__dirname}/../../public/timetable/thumbnail-temp.png`,
                 fullPage: true,
             })
             .catch((e) => void 0);
+
+        console.log("Saved screenshot");
         await browser.close();
 
         var text = "";
@@ -56,9 +66,9 @@ async function saveThumbnail() {
                 throw e;
             });
     }).on("error", async (e) => {
-        // await browser.close();
         logger.error("Failed to save timetable thumbnail");
     });
+    await browser.close();
 }
 
 module.exports = async (client) => {
@@ -80,6 +90,8 @@ module.exports = async (client) => {
                 return Array.from(columns, (column) => column.innerText);
             });
         });
+
+        await page.close();
         await browser.close();
 
         if (cells.length == 0) {
@@ -98,6 +110,6 @@ module.exports = async (client) => {
         fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
         logger.debug("Fetched timetable data");
 
-        saveThumbnail();
+        saveThumbnail(browser);
     }, 60 * 60 * 1000);
 };
