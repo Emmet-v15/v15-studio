@@ -9,6 +9,8 @@ const port = 443;
 
 // Server
 
+logger.log("Server Starting...", "log");
+
 const options = {
     key: fs.readFileSync("sslcert/v15.studio.key"),
     cert: fs.readFileSync("sslcert/v15.studio.pem"),
@@ -51,8 +53,4 @@ process.on("SIGINT", function () {
     process.exit();
 });
 
-const client = require("./bot");
-
-process.on("uncaughtException", exception.bind(null, client));
-
-process.on("unhandledRejection", exception.bind(null, client));
+require("./bot");

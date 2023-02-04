@@ -6,7 +6,7 @@ const enmap = require("enmap");
 const logger = require("./systems/logging/logger");
 const exception = require("./systems/logging/exception");
 
-logger.log("Starting...", "log");
+logger.log("Bot Starting...", "log");
 
 const client = new Client({
     intents: [32767, GatewayIntentBits.MessageContent],
@@ -18,7 +18,7 @@ client.settings = new enmap({
     fetchAll: false,
     autoFetch: true,
     cloneLevel: "deep",
-    dataDir: "./systems/settings/data",
+    dataDir: "./systems/database",
 });
 
 // Process
@@ -51,27 +51,6 @@ for (const event of readdirSync("./events/")) {
         task.complete();
     }
 }
-
-// for (const task of readdirSync("./systems/tasks", { withFileTypes: true })) {
-//     if (task.isDirectory()) {
-//         for (const file of readdirSync(`./systems/tasks/${task.name}/`, { withFileTypes: true })) {
-//             if (task.name.endsWith(".js")) {
-//                 console.log(task);
-//                 const task_ = logger.log(`Loading Task: ${task.name}/${file}.`);
-//                 const path = `./systems/tasks/${task.name}/${file}`;
-//                 const module = require(path);
-//                 module(client);
-//                 task_.complete();
-//             }
-//         }
-//     } else if (task.name.endsWith(".js")) {
-//         const task_ = logger.load(`Loading Task: ${task.name}.`);
-//         const path = `./systems/tasks/${task.name}`;
-//         const module = require(path);
-//         module(client);
-//         task_.complete();
-//     }
-// }
 
 client.login();
 

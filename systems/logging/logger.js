@@ -1,10 +1,6 @@
 const { cyan, red, magenta, gray, yellow, white, green } = require("colorette");
 const { Timestamp } = require("@sapphire/time-utilities");
 
-const { CombinedError, CombinedPropertyError } = require("@sapphire/shapeshift");
-
-const STACK_LINE_REGEX = /(\d+):(\d+)\)?$/;
-
 exports.log = (content, type = "log") => {
     const timestamp = `[${cyan(new Timestamp("YYYY-MM-DD HH:mm:ss"))}]:`;
 
