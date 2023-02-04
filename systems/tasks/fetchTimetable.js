@@ -39,7 +39,6 @@ async function saveThumbnail(browser) {
             ],
         });
 
-        console.log("Creating new page...");
         const page = await browser.newPage();
         console.log("Fetching https://v15.studio/timetable...");
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => {
@@ -67,6 +66,14 @@ async function saveThumbnail(browser) {
         var m = JSON.parse(fs.readFileSync(dataJson).toString());
         m["thumbnail"] = `https://v15.studio/timetable/${filename}`;
         fs.writeFileSync(dataJson, JSON.stringify(m, null, 4));
+
+        let inputHtml = fs.readFileSync(`${__dirname}/../../public/timetable/index.html`).toString();
+        let $ = require("cheerio").load(inputHtml);
+        $("meta[property='og:image']").attr("content", `https://v15.studio/timetable/${filename}`);
+        $("meta[property='twitter:image']").attr("content", `https://v15.studio/timetable/${filename}`);
+        $("meta[property='twitter:image:src']").attr("content", `https://v15.studio/timetable/${filename}`);
+
+        fs.writeFileSync(`${__dirname}/../../public/timetable/index.html`, $.html());
 
         const thumbnail_path = `${__dirname}/../../public/timetable/`;
         let regex = /thumbnail_.*\.png$/;

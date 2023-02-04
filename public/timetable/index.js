@@ -1,11 +1,8 @@
-let response = fetch("timetableData.json");
-let { data, thumbnail } = response.json();
-document.querySelector('meta[property="og:image"]').setAttribute("content", thumbnail);
-
 window.onload = async () => {
     const table = document.getElementsByClassName("Timetable")[0].getElementsByTagName("tbody")[0];
     const timestamp = document.getElementById("timestamp");
-
+    const response = fetch("timetableData.json");
+    const { data } = response.json();
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
     let count = 0;
