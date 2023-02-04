@@ -130,4 +130,4 @@ pnpm-lock.yaml
 .env
 
 # Database
-enmap.sqlite
+**/enmap.sqlite
