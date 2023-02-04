@@ -85,13 +85,21 @@ module.exports = async (client) => {
         await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
         await page.goto(process.env.TT_URL, { waitUntil: "networkidle2" }).catch((e) => void 0);
 
-        const cells = await page.evaluate(() => {
-            const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
-            return Array.from(rows, (row) => {
-                const columns = row.querySelectorAll("td");
-                return Array.from(columns, (column) => column.innerText);
+        try {
+            const cells = await page.evaluate(() => {
+                const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
+                return Array.from(rows, (row) => {
+                    const columns = row.querySelectorAll("td");
+                    return Array.from(columns, (column) => column.innerText);
+                });
             });
-        });
+        } catch (e) {
+            setTimeout(() => {
+                fetchTimetable();
+            }, 10000);
+            logger.warn("Failed to fetch, retrying in 10 seconds");
+            return await browser.close();
+        }
 
         if (cells.length == 0) {
             setTimeout(() => {
