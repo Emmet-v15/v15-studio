@@ -12,12 +12,28 @@ const client = new Client({
     partials: ["CHANNEL"],
 });
 
-client.settings = new enmap({
-    name: "settings",
+client.color = "AAC2C6";
+
+client.globalDB = new enmap({
+    name: "global",
     fetchAll: false,
     autoFetch: true,
     cloneLevel: "deep",
-    dataDir: "./systems/database",
+    dataDir: "./systems/settings/data",
+});
+client.guildDB = new enmap({
+    name: "guilds",
+    fetchAll: false,
+    autoFetch: true,
+    cloneLevel: "deep",
+    dataDir: "./systems/settings/data",
+});
+client.userDB = new enmap({
+    name: "users",
+    fetchAll: false,
+    autoFetch: true,
+    cloneLevel: "deep",
+    dataDir: "./systems/settings/data",
 });
 
 // Process

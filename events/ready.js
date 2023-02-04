@@ -1,5 +1,6 @@
 const slash = require("../systems/setup/slash");
 const logger = require("../systems/logging/logger");
+const exception = require("../systems/logging/exception");
 
 module.exports = async (client) => {
     // client.guilds.cache.forEach((guild) => {
