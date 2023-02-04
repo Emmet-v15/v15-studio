@@ -86,8 +86,9 @@ module.exports = async (client) => {
         await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
         await page.goto(process.env.TT_URL, { waitUntil: "networkidle2" }).catch((e) => void 0);
 
+        let cells;
         try {
-            const cells = await page.evaluate(() => {
+            cells = await page.evaluate(() => {
                 const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
                 return Array.from(rows, (row) => {
                     const columns = row.querySelectorAll("td");
