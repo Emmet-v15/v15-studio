@@ -110,6 +110,8 @@ module.exports = async (client) => {
         fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
         logger.debug("Fetched timetable data");
 
-        saveThumbnail(browser);
+        setTimeout(() => {
+            saveThumbnail(browser);
+        }, 10 * 1000);
     }, 60 * 60 * 1000);
 };
