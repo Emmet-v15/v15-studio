@@ -54,3 +54,5 @@ process.on("SIGINT", function () {
 });
 
 const client = require("./bot");
+
+client();
