@@ -17,7 +17,26 @@ async function saveThumbnail(browser) {
         const browser = await puppeteer.launch({
             devtools: false,
             userDataDir: "./cache",
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+            args: [
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-accelerated-2d-canvas",
+                "--no-first-run",
+                "--no-zygote",
+                "--single-process",
+                "--disable-gpu",
+                "--disable-background-networking",
+                "--disable-default-apps",
+                "--disable-extensions",
+                "--disable-sync",
+                "--disable-translate",
+                "--hide-scrollbars",
+                "--metrics-recording-only",
+                "--mute-audio",
+                "--no-default-browser-check",
+                "--no-pings",
+                "--no-sandbox",
+            ],
         });
 
         console.log("Creating new page...");
