@@ -53,6 +53,6 @@ process.on("SIGINT", function () {
     process.exit();
 });
 
-const client = require("./bot");
+const { client } = require("./bot");
 
-client();
+console.log(client());
