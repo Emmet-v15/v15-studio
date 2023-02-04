@@ -56,8 +56,8 @@ async function saveThumbnail(browser, page) {
 module.exports = async (client) => {
     instantInterval(async () => {
         const browser = await puppeteer.launch({
-            // devtools: false,
-            headless: false,
+            devtools: false,
+            headless: true,
             userDataDir: "./cache",
             args: [
                 "--disable-setuid-sandbox",
