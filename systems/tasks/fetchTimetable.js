@@ -16,6 +16,7 @@ async function saveThumbnail(browser, page) {
     http.get("http://v15.studio/timetable", async (res) => {
         logger.debug("Fetching https://v15.studio/timetable...");
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" });
+        console.log("weee");
         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
         await page.screenshot({
             path: `${__dirname}/../../public/timetable/thumbnail-temp.png`,
