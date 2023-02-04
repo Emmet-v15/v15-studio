@@ -16,7 +16,6 @@ async function saveThumbnail(browser, page) {
     http.get("http://v15.studio/timetable", async (res) => {
         logger.debug("Fetching https://v15.studio/timetable...");
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" });
-        console.log("weee");
         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
         await page.screenshot({
             path: `${__dirname}/../../public/timetable/thumbnail-temp.png`,
@@ -47,6 +46,7 @@ async function saveThumbnail(browser, page) {
         await sharp(`${__dirname}/../../public/timetable/thumbnail-temp.png`)
             .extract({ width: 960, height: 480, left: 120, top: 120 })
             .toFile(`${thumbnail_path}${filename}`);
+        logger.log("Saved timetable thumbnail");
     }).on("error", async (e) => {
         logger.error("Failed to save timetable thumbnail");
         await page.close();
