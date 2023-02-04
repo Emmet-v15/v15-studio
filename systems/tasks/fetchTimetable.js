@@ -96,7 +96,7 @@ module.exports = async (client) => {
         console.log("Fetching timetable data...");
 
         const browser = await puppeteer.launch({
-            devtools: true,
+            devtools: false,
             userDataDir: "./cache",
             args: [
                 "--disable-setuid-sandbox",
