@@ -54,73 +54,75 @@ async function saveThumbnail(browser, page) {
     });
 }
 
-module.exports = async (client) => {
-    instantInterval(async () => {
-        const browser = await puppeteer.launch({
-            devtools: false,
-            headless: true,
-            userDataDir: "./cache",
-            args: [
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-accelerated-2d-canvas",
-                "--no-first-run",
-                "--no-zygote",
-                "--single-process",
-                "--disable-gpu",
-                "--disable-background-networking",
-                "--disable-default-apps",
-                "--disable-extensions",
-                "--disable-sync",
-                "--disable-translate",
-                "--hide-scrollbars",
-                "--metrics-recording-only",
-                "--mute-audio",
-                "--no-default-browser-check",
-                "--no-pings",
-                "--no-sandbox",
-            ],
-        });
+const fetchTimetable = async () => {
+    const browser = await puppeteer.launch({
+        devtools: false,
+        headless: true,
+        userDataDir: "./cache",
+        args: [
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-accelerated-2d-canvas",
+            "--no-first-run",
+            "--no-zygote",
+            "--single-process",
+            "--disable-gpu",
+            "--disable-background-networking",
+            "--disable-default-apps",
+            "--disable-extensions",
+            "--disable-sync",
+            "--disable-translate",
+            "--hide-scrollbars",
+            "--metrics-recording-only",
+            "--mute-audio",
+            "--no-default-browser-check",
+            "--no-pings",
+            "--no-sandbox",
+        ],
+    });
 
-        const page = await browser.newPage();
-        await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
-        await page.goto(process.env.TT_URL, { waitUntil: "networkidle2" }).catch((e) => void 0);
+    const page = await browser.newPage();
+    await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
+    await page.goto(process.env.TT_URL, { waitUntil: "networkidle2" }).catch((e) => void 0);
 
-        let cells;
-        try {
-            cells = await page.evaluate(() => {
-                const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
-                return Array.from(rows, (row) => {
-                    const columns = row.querySelectorAll("td");
-                    return Array.from(columns, (column) => column.innerText);
-                });
+    let cells;
+    try {
+        cells = await page.evaluate(() => {
+            const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");
+            return Array.from(rows, (row) => {
+                const columns = row.querySelectorAll("td");
+                return Array.from(columns, (column) => column.innerText);
             });
-        } catch (e) {
-            setTimeout(() => {
-                fetchTimetable();
-            }, 10000);
-            logger.warn("Failed to fetch, retrying in 10 seconds");
-            return await browser.close();
-        }
-
-        if (cells.length == 0) {
-            setTimeout(() => {
-                fetchTimetable();
-            }, 10000);
-            logger.warn("Failed to fetch, retrying in 10 seconds");
-            return await browser.close();
-        }
-
-        data = {
-            timestamp: Date.now() + 60 * 60 * 1000,
-            cells: cells.slice(0),
-        };
-
-        fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
-        logger.debug("Fetched timetable data");
-
+        });
+    } catch (e) {
         setTimeout(() => {
-            saveThumbnail(browser, page);
-        }, 1 * 1000);
-    }, 60 * 60 * 1000);
+            fetchTimetable();
+        }, 10000);
+        logger.warn("Failed to fetch, retrying in 10 seconds");
+        return await browser.close();
+    }
+
+    if (cells.length == 0) {
+        setTimeout(() => {
+            fetchTimetable();
+        }, 10000);
+        logger.warn("Failed to fetch, retrying in 10 seconds");
+        return await browser.close();
+    }
+
+    data = {
+        timestamp: Date.now() + 60 * 60 * 1000,
+        cells: cells.slice(0),
+    };
+
+    fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
+    logger.debug("Fetched timetable data");
+
+    setTimeout(() => {
+        saveThumbnail(browser, page);
+    }, 1 * 1000);
+};
+
+module.exports = async (client) => {
+    instantInterval(fetchTimetable, 60 * 60 * 1000);
 };
