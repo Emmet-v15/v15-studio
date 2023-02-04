@@ -12,34 +12,8 @@ const { instantInterval } = require("../../util/interval");
 const dataJson = path.join(__dirname, "../../public/timetable/timetableData.json");
 var data = {};
 
-async function saveThumbnail(browser) {
+async function saveThumbnail(browser, page) {
     http.get("http://v15.studio/timetable", async (res) => {
-        const browser = await puppeteer.launch({
-            devtools: false,
-            userDataDir: "./cache",
-            args: [
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-accelerated-2d-canvas",
-                "--no-first-run",
-                "--no-zygote",
-                "--single-process",
-                "--disable-gpu",
-                "--disable-background-networking",
-                "--disable-default-apps",
-                "--disable-extensions",
-                "--disable-sync",
-                "--disable-translate",
-                "--hide-scrollbars",
-                "--metrics-recording-only",
-                "--mute-audio",
-                "--no-default-browser-check",
-                "--no-pings",
-                "--no-sandbox",
-            ],
-        });
-
-        const page = await browser.newPage();
         console.log("Fetching https://v15.studio/timetable...");
         await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => {
             logger.error("Error while fetching timetable: " + e);
@@ -156,7 +130,7 @@ module.exports = async (client) => {
         logger.debug("Fetched timetable data");
 
         setTimeout(() => {
-            saveThumbnail(browser);
+            saveThumbnail(browser, page);
         }, 10 * 1000);
     }, 60 * 60 * 1000);
 };

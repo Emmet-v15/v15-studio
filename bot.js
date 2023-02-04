@@ -4,7 +4,6 @@ const { readdirSync } = require("fs");
 const enmap = require("enmap");
 
 const logger = require("./systems/logging/logger");
-const exception = require("./systems/logging/exception");
 
 logger.log("Bot Starting...", "log");
 

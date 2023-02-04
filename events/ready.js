@@ -9,7 +9,7 @@ module.exports = async (client) => {
     await slash(client);
     logger.log(`${client.user.tag}, serving ${client.users.cache.size} users in ${client.guilds.cache.size} servers`, "ready");
 
-    //     process.on("uncaughtException", exception.bind(null, client));
+    process.on("uncaughtException", exception.bind(null, client));
 
-    //     process.on("unhandledRejection", exception.bind(null, client));
+    process.on("unhandledRejection", exception.bind(null, client));
 };
