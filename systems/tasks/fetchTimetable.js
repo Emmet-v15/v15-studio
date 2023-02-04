@@ -92,8 +92,6 @@ async function saveThumbnail(browser) {
 
 module.exports = async (client) => {
     instantInterval(async () => {
-        console.log("Fetching timetable data...");
-
         const browser = await puppeteer.launch({
             devtools: false,
             userDataDir: "./cache",

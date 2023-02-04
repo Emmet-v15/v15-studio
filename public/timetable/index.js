@@ -1,5 +1,5 @@
-const response = await fetch("timetableData.json");
-const { data, thumbnail } = await response.json();
+let response = fetch("timetableData.json");
+let { data, thumbnail } = response.json();
 document.querySelector('meta[property="og:image"]').setAttribute("content", thumbnail);
 
 window.onload = async () => {
