@@ -14,7 +14,7 @@ module.exports = async (client) => {
         delete require.cache[i];
     }
 
-    for (const command of readdirSync("../../commands/slash", { withFileTypes: true })) {
+    for (const command of readdirSync("./commands/slash", { withFileTypes: true })) {
         if (command.isDirectory()) {
             const cmd = new SlashCommandBuilder().setName(command.name).setDescription(command.name);
             store[command.name] = {};
