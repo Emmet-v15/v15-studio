@@ -4,6 +4,7 @@ const { readdirSync } = require("fs");
 const subdomain = require("express-subdomain");
 const express = require("express");
 const logger = require("./systems/logging/logger");
+const client = require("./bot");
 const app = express();
 const path = require("path");
 const port = 443;
@@ -33,8 +34,6 @@ https
     });
 
 // tasks
-
-client = require("./bot");
 
 for (const task of readdirSync("./systems/tasks", { withFileTypes: true })) {
     if (task.isDirectory()) {
@@ -72,5 +71,8 @@ if (process.platform === "win32") {
 
 process.on("SIGINT", function () {
     logger.log("Shutting Down...", "log");
+    client.guildDB.close();
+    client.userDB.close();
+    client.globalDB.close();
     process.exit();
 });

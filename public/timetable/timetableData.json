@@ -1,6 +1,6 @@
 {
     "data": {
-        "timestamp": 1675550191458,
+        "timestamp": 1675551013659,
         "cells": [
             [],
             [
@@ -284,5 +284,6 @@
                 ""
             ]
         ]
-    }
+    },
+    "thumbnail": "https://v15.studio/timetable/thumbnail_OcktOc.png"
 }

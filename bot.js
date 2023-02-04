@@ -19,21 +19,21 @@ client.globalDB = new enmap({
     fetchAll: false,
     autoFetch: true,
     cloneLevel: "deep",
-    dataDir: "./systems/settings/data",
+    dataDir: "./systems/database",
 });
 client.guildDB = new enmap({
     name: "guilds",
     fetchAll: false,
     autoFetch: true,
     cloneLevel: "deep",
-    dataDir: "./systems/settings/data",
+    dataDir: "./systems/database",
 });
 client.userDB = new enmap({
     name: "users",
     fetchAll: false,
     autoFetch: true,
     cloneLevel: "deep",
-    dataDir: "./systems/settings/data",
+    dataDir: "./systems/database",
 });
 
 // Process

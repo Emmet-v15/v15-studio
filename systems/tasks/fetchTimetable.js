@@ -14,39 +14,27 @@ var data = {};
 
 async function saveThumbnail(browser, page) {
     http.get("http://v15.studio/timetable", async (res) => {
-        console.log("Fetching https://v15.studio/timetable...");
-        await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" }).catch((e) => {
-            logger.error("Error while fetching timetable: " + e);
-        });
-        console.log("Fetched https://v15.studio/timetable");
+        logger.debug("Fetching https://v15.studio/timetable...");
+        await page.goto("https://v15.studio/timetable", { waitUntil: "networkidle2" });
         await page.setViewport({ width: 1200, height: 600, deviceScaleFactor: 1 });
-
-        console.log("Saving screenshot...");
-        await page
-            .screenshot({
-                path: `${__dirname}/../../public/timetable/thumbnail-temp.png`,
-                fullPage: true,
-            })
-            .catch((e) => void 0);
-
-        console.log("Saved screenshot");
+        await page.screenshot({
+            path: `${__dirname}/../../public/timetable/thumbnail-temp.png`,
+            fullPage: true,
+        });
         await browser.close();
 
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let text = "";
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-
         const filename = `thumbnail_${text}.png`;
-        var m = JSON.parse(fs.readFileSync(dataJson).toString());
-        m["thumbnail"] = `https://v15.studio/timetable/${filename}`;
-        fs.writeFileSync(dataJson, JSON.stringify(m, null, 4));
+
+        // update html meta tags for new thumbnail
 
         let inputHtml = fs.readFileSync(`${__dirname}/../../public/timetable/index.html`).toString();
         let $ = require("cheerio").load(inputHtml);
         $("meta[property='og:image']").attr("content", `https://v15.studio/timetable/${filename}`);
         $("meta[property='twitter:image']").attr("content", `https://v15.studio/timetable/${filename}`);
         $("meta[property='twitter:image:src']").attr("content", `https://v15.studio/timetable/${filename}`);
-
         fs.writeFileSync(`${__dirname}/../../public/timetable/index.html`, $.html());
 
         const thumbnail_path = `${__dirname}/../../public/timetable/`;
@@ -55,26 +43,21 @@ async function saveThumbnail(browser, page) {
             .filter((f) => regex.test(f))
             .map((f) => fs.unlinkSync(thumbnail_path + f));
 
-        sharp(`${__dirname}/../../public/timetable/thumbnail-temp.png`)
+        await sharp(`${__dirname}/../../public/timetable/thumbnail-temp.png`)
             .extract({ width: 960, height: 480, left: 120, top: 120 })
-            .toFile(`${thumbnail_path}${filename}`)
-            .then(() => {
-                logger.debug("Saved thumbnail");
-            })
-            .catch((e) => {
-                logger.error(e);
-                throw e;
-            });
+            .toFile(`${thumbnail_path}${filename}`);
     }).on("error", async (e) => {
         logger.error("Failed to save timetable thumbnail");
+        await page.close();
+        await browser.close();
     });
-    await browser.close();
 }
 
 module.exports = async (client) => {
     instantInterval(async () => {
         const browser = await puppeteer.launch({
-            devtools: false,
+            // devtools: false,
+            headless: false,
             userDataDir: "./cache",
             args: [
                 "--disable-setuid-sandbox",
@@ -110,9 +93,6 @@ module.exports = async (client) => {
             });
         });
 
-        await page.close();
-        await browser.close();
-
         if (cells.length == 0) {
             setTimeout(() => {
                 fetchTimetable();
@@ -131,6 +111,6 @@ module.exports = async (client) => {
 
         setTimeout(() => {
             saveThumbnail(browser, page);
-        }, 10 * 1000);
+        }, 1 * 1000);
     }, 60 * 60 * 1000);
 };
