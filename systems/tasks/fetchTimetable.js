@@ -80,7 +80,6 @@ module.exports = async (client) => {
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
         });
 
-        console.log("Creating new page...");
         const page = await browser.newPage();
         await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
         await page.goto(process.env.TT_URL, { waitUntil: "networkidle2" }).catch((e) => void 0);
@@ -112,8 +111,8 @@ module.exports = async (client) => {
         fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
         logger.debug("Fetched timetable data");
 
-        setTimeout(() => {
-            saveThumbnail(browser);
-        }, 10 * 1000);
+        // setTimeout(() => {
+        //     saveThumbnail(browser);
+        // }, 10 * 1000);
     }, 60 * 60 * 1000);
 };
