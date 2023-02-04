@@ -46,7 +46,7 @@ async function saveThumbnail(browser, page) {
         await sharp(`${__dirname}/../../public/timetable/thumbnail-temp.png`)
             .extract({ width: 960, height: 480, left: 120, top: 120 })
             .toFile(`${thumbnail_path}${filename}`);
-        logger.log("Saved timetable thumbnail");
+        logger.debug("Saved timetable thumbnail");
     }).on("error", async (e) => {
         logger.error("Failed to save timetable thumbnail");
         await page.close();
@@ -55,6 +55,7 @@ async function saveThumbnail(browser, page) {
 }
 
 const fetchTimetable = async () => {
+    logger.debug("Fetching Timetable");
     const browser = await puppeteer.launch({
         devtools: false,
         headless: true,
@@ -116,7 +117,6 @@ const fetchTimetable = async () => {
     };
 
     fs.writeFileSync(dataJson, JSON.stringify({ data: data }, null, 4));
-    logger.debug("Fetched timetable data");
 
     setTimeout(() => {
         saveThumbnail(browser, page);
