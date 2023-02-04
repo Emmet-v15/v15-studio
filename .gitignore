@@ -133,4 +133,4 @@ pnpm-lock.yaml
 systems/database/
 
 # images
-/public/timetable/*.png
+public/timetable/*.png
