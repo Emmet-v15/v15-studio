@@ -3,7 +3,6 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 const logger = require("../systems/logging/logger");
-const { username, password, timetableURL } = require("../config.json");
 const dataJson = path.join(__dirname, "../public/timetable/timetableData.json");
 var data = {};
 
@@ -15,8 +14,8 @@ async function fetchTimetable() {
     });
 
     const page = await browser.newPage();
-    await page.authenticate({ username: username, password: password });
-    await page.goto(timetableURL, { waitUntil: "networkidle2" }).catch((e) => void 0);
+    await page.authenticate({ username: process.env.TT_USERNAME, password: process.env.TT_PASSWORD });
+    await page.goto(process.env.TT_URL, { waitUntil: "networkidle2" }).catch((e) => void 0);
 
     const cells = await page.evaluate(() => {
         const rows = document.querySelectorAll("#Content_Content_Content_MainContent_timetable1_tbltimetable tr");

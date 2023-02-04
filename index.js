@@ -7,6 +7,13 @@ const app = express();
 const path = require("path");
 const port = 443;
 
+const Discord = require("discord.js");
+const client = new Discord.Client();
+
+const exception = require("./systems/logging/exception");
+
+// Server
+
 const options = {
     key: fs.readFileSync("sslcert/v15.studio.key"),
     cert: fs.readFileSync("sslcert/v15.studio.pem"),
@@ -27,4 +34,28 @@ https
         logger.ready(`Server started on port ${port}`);
     });
 
+// tasks
+
 require("./tasks/fetchData");
+
+// process
+
+if (process.platform === "win32") {
+    var rl = require("readline").createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+
+    rl.on("SIGINT", function () {
+        process.emit("SIGINT");
+    });
+}
+
+process.on("SIGINT", function () {
+    logger.log("Shutting Down...", "log");
+    process.exit();
+});
+
+process.on("uncaughtException", exception.bind(null, client));
+
+process.on("unhandledRejection", exception.bind(null, client));
