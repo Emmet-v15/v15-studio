@@ -33,7 +33,6 @@ async function saveThumbnail(browser, page) {
         let inputHtml = fs.readFileSync(`${__dirname}/../../public/timetable/index.html`).toString();
         let $ = require("cheerio").load(inputHtml);
         $("meta[property='og:image']").attr("content", `https://v15.studio/timetable/${filename}`);
-        $("meta[property='twitter:image']").attr("content", `https://v15.studio/timetable/${filename}`);
         $("meta[property='twitter:image:src']").attr("content", `https://v15.studio/timetable/${filename}`);
         fs.writeFileSync(`${__dirname}/../../public/timetable/index.html`, $.html());
 
@@ -59,7 +58,7 @@ const fetchTimetable = async () => {
     const browser = await puppeteer.launch({
         devtools: false,
         headless: true,
-        userDataDir: "./cache",
+        userDataDir: "./cache", 
         args: [
             "--disable-setuid-sandbox",
             "--disable-dev-shm-usage",
