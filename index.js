@@ -25,7 +25,13 @@ app.use(subdomain("api", require("./api/router")));
 https
     .createServer(options, (req, res) => {
         const a = req.socket.remoteAddress.slice(7);
-        logger.log(`{${a.startsWith("172.70") ? "localhost" : a}}: [${req.method} ${req.url}]`);
+        let ip;
+        if (a.startsWith("172.70")) {
+            ip = "localhost";
+        } else {
+            ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+        }
+        logger.log(`{${ip}}: [${req.method} ${req.url}]`);
         app.handle(req, res);
     })
     .listen(port, (err) => {
