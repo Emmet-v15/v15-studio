@@ -123,5 +123,5 @@ const fetchTimetable = async () => {
 };
 
 module.exports = async (client) => {
-    instantInterval(fetchTimetable, 60 * 60 * 1000);
+    // instantInterval(fetchTimetable, 60 * 60 * 1000);
 };
