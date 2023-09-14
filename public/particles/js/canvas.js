@@ -306,22 +306,20 @@ window.onload = function () {
         });
 
         document.addEventListener('touchstart', (e) => {
-            e.preventDefault();
             let touch = e.touches[0];
             mouse.x = touch.clientX;
             mouse.y = touch.clientY;
             mouse.down[1] = true;
+            e.preventDefault();
         })
         document.addEventListener('touchmove', (e) => {
-            if (e.target.nodeName !== 'INPUT') {
-                e.preventDefault();
-            }            let touch = e.touches[0];
-            disableTouchScroll();
+            let touch = e.touches[0];
             const mouseEvent = new MouseEvent("mousemove", {
                 clientX: touch.clientX,
                 clientY: touch.clientY
             });
             document.querySelector('html').dispatchEvent(mouseEvent);
+            e.preventDefault();
         })
 
         document.addEventListener('touchend', (e) => {
