@@ -304,6 +304,39 @@ window.onload = function () {
             mouse.down[event.button] = false;
             event.preventDefault();
         });
+
+        document.addEventListener('touchstart', (e) => {
+            let touch = e.touches[0];
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+            mouse.down[0] = true;
+            e.preventDefault();
+        })
+        document.addEventListener('touchmove', (e) => {
+            let touch = e.touches[0];
+            const mouseEvent = new MouseEvent("mousemove", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            document.querySelector('html').dispatchEvent(mouseEvent);
+            e.preventDefault();
+        })
+
+        document.addEventListener('touchend', (e) => {
+            mouse.down[0] = false;
+            e.preventDefault();
+        })
+
+        document.addEventListener('touchcancel', (e) => {
+            mouse.down[0] = false;
+            e.preventDefault();
+        })
+
+        document.addEventListener('touchleave', (e) => {
+            mouse.down[0] = false;
+            e.preventDefault();
+        })
+
     }
     registerMouse();
 
