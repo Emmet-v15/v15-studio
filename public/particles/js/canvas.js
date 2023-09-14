@@ -314,6 +314,7 @@ window.onload = function () {
         })
         document.addEventListener('touchmove', (e) => {
             let touch = e.touches[0];
+            disableTouchScroll();
             const mouseEvent = new MouseEvent("mousemove", {
                 clientX: touch.clientX,
                 clientY: touch.clientY
