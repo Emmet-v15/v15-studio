@@ -309,7 +309,7 @@ window.onload = function () {
             let touch = e.touches[0];
             mouse.x = touch.clientX;
             mouse.y = touch.clientY;
-            mouse.down[1] = true;
+            mouse.down[2] = true;
             e.preventDefault();
         })
         document.addEventListener('touchmove', (e) => {
@@ -323,17 +323,17 @@ window.onload = function () {
         })
 
         document.addEventListener('touchend', (e) => {
-            mouse.down[1] = false;
+            mouse.down[2] = false;
             e.preventDefault();
         })
 
         document.addEventListener('touchcancel', (e) => {
-            mouse.down[1] = false;
+            mouse.down[2] = false;
             e.preventDefault();
         })
 
         document.addEventListener('touchleave', (e) => {
-            mouse.down[1] = false;
+            mouse.down[2] = false;
             e.preventDefault();
         })
 
