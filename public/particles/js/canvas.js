@@ -314,6 +314,8 @@ window.onload = function () {
         })
         document.addEventListener('touchmove', (e) => {
             let touch = e.touches[0];
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
             const mouseEvent = new MouseEvent("mousemove", {
                 clientX: touch.clientX,
                 clientY: touch.clientY
