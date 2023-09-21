@@ -17,6 +17,7 @@ router.post("/v1/pollbot/", function (req, res) {
         console.log("Method: Up Vote");
         console.log("Post^: " + body.post);
     }
+    console.log(body)
     res.sendStatus(200);
 });
 
