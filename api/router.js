@@ -11,14 +11,14 @@ router.get("/v1", function (req, res) {
 });
 
 router.post("/v1/pollbot/", function (req, res) {
-    console.log("recieved")
     const body = req.body;
+    console.log("what")
     if (!body) return res.send("no body");
     if (body.method == "upvote") {
         console.log("Method: Up Vote");
         console.log("Post^: " + body.post);
     }
-    res.sendStatus(200)
+    res.sendStatus(200);
 });
 
 module.exports = router;
