@@ -41,6 +41,14 @@ https
 
 // tasks
 
+process.on("unhandledRejection", (reason, promise) => {
+    logger.error(`Unhandled Rejection at: ${promise}\nreason: ${reason}`);
+});
+process.on("uncaughtException", (err) => {
+    logger.error(`Uncaught Exception: ${err}`);
+});
+
+
 for (const task of readdirSync("./systems/tasks", { withFileTypes: true })) {
     if (task.isDirectory()) {
         for (const file of readdirSync(`./systems/tasks/${task.name}/`, { withFileTypes: true })) {
