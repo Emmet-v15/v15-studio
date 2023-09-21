@@ -3,6 +3,7 @@ const fs = require("fs");
 const { readdirSync } = require("fs");
 const subdomain = require("express-subdomain");
 const express = require("express");
+const bodyParser = require("body-parser");
 const logger = require("./systems/logging/logger");
 const client = require("./bot");
 const app = express();
@@ -21,7 +22,7 @@ const options = {
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(subdomain("api", require("./api/router")));
-app.use(express.json());
+app.use(bodyParser.json());
 
 https
     .createServer(options, (req, res) => {
