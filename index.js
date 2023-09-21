@@ -20,9 +20,10 @@ const options = {
     ca: fs.readFileSync("sslcert/origin-ca.pem"),
 };
 
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(subdomain("api", require("./api/router")));
-app.use(bodyParser.json());
 
 https
     .createServer(options, (req, res) => {
