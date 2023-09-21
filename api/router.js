@@ -12,8 +12,7 @@ router.get("/v1", function (req, res) {
 
 router.post("/v1/pollbot/", function (req, res) {
     const body = req.body;
-    // why is body undefined
-    // A: because you need to use body-parser
+    console.log(Object.keys(req))
 
     if (!body) return res.send("no body");
     if (body.method == "upvote") {
