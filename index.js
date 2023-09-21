@@ -21,6 +21,7 @@ const options = {
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(subdomain("api", require("./api/router")));
+app.use(express.json());
 
 https
     .createServer(options, (req, res) => {
