@@ -12,7 +12,6 @@ router.get("/v1", function (req, res) {
 
 router.post("/v1/pollbot/", function (req, res) {
     const body = req.body;
-    console.log("what")
     if (!body) return res.send("no body");
     if (body.method == "upvote") {
         console.log("Method: Up Vote");
