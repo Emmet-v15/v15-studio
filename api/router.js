@@ -6,11 +6,11 @@ router.get("*", function (req, res, next) {
     next();
 });
 
-router.get("/api/v1", function (req, res) {
+router.get("/v1", function (req, res) {
     res.send("Emmet's API");
 });
 
-router.post("/api/v1/pollbot/", function (req, res) {
+router.post("/v1/pollbot/", function (req, res) {
     console.log("recieved")
     const body = req.body;
     if (!body) return;
