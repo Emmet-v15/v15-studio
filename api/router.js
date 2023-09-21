@@ -10,7 +10,8 @@ router.get("/api/v1", function (req, res) {
     res.send("Emmet's API");
 });
 
-router.post("/api/v1/pollbot", function (req, res) {
+router.post("/api/v1/pollbot/", function (req, res) {
+    console.log("recieved")
     const body = req.body;
     if (!body) return;
     if (body.method == "upvote") {
