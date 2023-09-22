@@ -10,16 +10,19 @@ router.get("/v1", function (req, res) {
     res.send("Emmet's API");
 });
 
+let url = "https://pollev.com/oscpp"
+
 router.post("/v1/pollbot/", function (req, res) {
     const body = req.body;
-    console.log(Object.keys(req))
 
     if (!body) return res.send("no body");
-    if (body.method == "upvote") {
-        console.log("Method: Up Vote");
-        console.log("Post^: " + body.post);
-    }
+    if (body.url) url = `https://pollev.com/${body.url}`;
+    if (body.post) post = body.post;
     res.sendStatus(200);
+});
+
+router.get("/v1/pollbot/", function (req, res) {
+    res.json({ url, post });
 });
 
 module.exports = router;
