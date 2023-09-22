@@ -21,7 +21,7 @@ router.post("/v1/pollbot/", function (req, res) {
     res.sendStatus(200);
 });
 
-router.get("/v1/pollbot/", function (req, res) {
+router.get("/v1/pollbotget/", function (req, res) {
     // res.sendStatus(200);
     res.send(JSON.stringify({ url, post }));
 });
