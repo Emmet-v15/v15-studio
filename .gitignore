@@ -134,3 +134,4 @@ systems/database/
 
 # images
 public/timetable/*.png
+*.sqlite
